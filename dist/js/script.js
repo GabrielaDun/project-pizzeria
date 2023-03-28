@@ -63,6 +63,8 @@
     initData: function(){
       const thisApp = this;
       thisApp.data = dataSource;
+      console.log(dataSource);
+      console.log(thisApp);
     },
     init: function(){
       const thisApp = this;
@@ -85,6 +87,10 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.getElements();
+      thisProduct.initAccordion();
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
       console.log ('new Product:', thisProduct);
     }
     renderInMenu(){
@@ -98,9 +104,64 @@
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
 
+    }
+    getElements(){
+      const thisProduct = this;
+    
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      console.log(thisProduct.accordionTrigger);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      console.log(thisProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+    }
 
+    initAccordion(){
+      const thisProduct = this;
+  
+
+      /* START: add event listener to clickable trigger on event click */
+      thisProduct.accordionTrigger.addEventListener('click', function(event) {
+        /* prevent default action for event */
+        event.preventDefault();
+        /* find active product (product that has active class) */
+        const activeProduct = document.querySelector('.product__wrapper');
+        console.log(activeProduct);
+        console.log(thisProduct.element);
+        /* if there is active product and it's not thisProduct.element, remove class active from it */
+        if (!activeProduct==thisProduct.element) {
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+        } 
+        /* toggle active class on thisProduct.element */
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+      });
+    }
+    initOrderForm(){
+      const thisProduct = this;
+      console.log(thisProduct);
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+    }
+    processOrder(){
+      const thisProduct = this;
+      console.log(thisProduct);
     }
   }
+  
 
   app.init();
 }
