@@ -91,6 +91,7 @@
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
       thisProduct.processOrder();
+      thisProduct.initAmountWidget();
     }
     renderInMenu(){
       const thisProduct = this;
@@ -115,6 +116,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion(){
@@ -125,11 +127,11 @@
         /* prevent default action for event */
         event.preventDefault();
         /* find active product (product that has active class) */
-        const activeProduct = thisProduct.element.querySelector('.active');
-        console.log(activeProduct);
-        console.log(thisProduct.element);
+        const activeProduct = document.querySelector('.product.active');
+        //console.log(activeProduct);
+        //console.log(thisProduct.element);
         /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if (!activeProduct==thisProduct.element.div) {
+        if (activeProduct && activeProduct!== thisProduct.element) {
           activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
         } 
         /* toggle active class on thisProduct.element */
@@ -160,11 +162,11 @@
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log( formData);
+      //console.log(formData);
 
       // set price to default price
       let price = thisProduct.data.price;
-      console.log(price);
+      //console.log(price);
 
       // for every category (param)...
       for(let paramId in thisProduct.data.params) {
@@ -175,18 +177,33 @@
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
           // check if there is param with a name of paramId in formData and if it includes optionId
+          
+          const nowaStala = '.' + paramId + '-' + optionId;
+          const optionImage = thisProduct.imageWrapper.querySelector(nowaStala);
+          //console.log(optionImage);
+
           if(formData[paramId] && formData[paramId].includes(optionId)) {
+            if (optionImage){
+              //console.log('Tak!!');
+              optionImage.classList.add('active');
+            }
             // check if the option is not default
-            if(option!=='default: true') {
-              console.log(formData[paramId]);
-              console.log(price);
+            if(!option.default) {
+              //console.log(formData[paramId]);
+              //console.log(option);
+              //console.log(optionId);
               // add option price to price variable
               price += option.price;
-              console.log(price);
+              //console.log(price);
             }
-          } else {
+          } 
+          else {
+            if (optionImage){
+              //console.log('Tak!!');
+              optionImage.classList.remove('active');
+            }
             // check if the option is default
-            if(option=='default: true') {
+            if(option.default) {
               // reduce price variable
               price -= option.price;
               
@@ -199,6 +216,43 @@
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
+
+    initAmountWidget(){
+      const thisProduct = this;
+      thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
+    }
+
+  }
+  class amountWidget {
+    constructor(element){
+      const thisWidget = this;
+      console.log('AmountWidget', thisWidget);
+      console.log('constructor arguments:', element);
+      thisWidget.getElements(element);
+    }
+
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value){
+      const thisWidget = this;
+      const newValue = parseInt(value);
+
+      /* Validation */
+      if(thisWidget.value !== newValue && isNaN(newValue)) {
+        thisWidget.value = newValue;
+      }
+    
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    
   }
   
 
