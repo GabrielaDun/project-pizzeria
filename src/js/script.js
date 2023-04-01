@@ -180,26 +180,18 @@
           
           const nowaStala = '.' + paramId + '-' + optionId;
           const optionImage = thisProduct.imageWrapper.querySelector(nowaStala);
-          //console.log(optionImage);
 
           if(formData[paramId] && formData[paramId].includes(optionId)) {
             if (optionImage){
-              //console.log('Tak!!');
               optionImage.classList.add('active');
             }
             // check if the option is not default
             if(!option.default) {
-              //console.log(formData[paramId]);
-              //console.log(option);
-              //console.log(optionId);
-              // add option price to price variable
               price += option.price;
-              //console.log(price);
             }
           } 
           else {
             if (optionImage){
-              //console.log('Tak!!');
               optionImage.classList.remove('active');
             }
             // check if the option is default
@@ -215,14 +207,18 @@
 
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
+      console.log(price);
+      price *= thisProduct.amountWidget.value;
     }
 
     initAmountWidget(){
       const thisProduct = this;
       thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('update', function(){
+        thisProduct.processOrder();
+      }); 
+
     }
-
-
 
 
 
@@ -231,10 +227,8 @@
   class amountWidget {
     constructor(element){
       const thisWidget = this;
-      console.log('AmountWidget', thisWidget);
-      console.log('constructor arguments:', element);
       thisWidget.getElements(element);
-      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(settings.amountWidget.defaultValue);
       thisWidget.initActions();
     }
 
@@ -246,17 +240,23 @@
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
+    announce(){
+      const thisWidget = this;
+      const event = new Event ('update');
+      thisWidget.element.dispatchEvent(event);
+    }
+
     setValue(value){
       const thisWidget = this;
       const newValue = parseInt(value);
 
       /* Validation */
-      if(thisWidget.value !== newValue && isNaN(newValue)) {
+      if (thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
         thisWidget.value = newValue;
       }
-    
-      thisWidget.value = newValue;
+  
       thisWidget.input.value = thisWidget.value;
+      thisWidget.announce();
     }
 
     initActions(){
