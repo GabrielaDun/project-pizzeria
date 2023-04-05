@@ -370,7 +370,7 @@
       thisCart.products = [];
 
       thisCart.getElements(element);
-      thisCart.initAction();
+      thisCart.initActions();
     }
     getElements(element){
       const thisCart = this;
@@ -385,7 +385,7 @@
         totalNumber: element.querySelector(select.cart.totalNumber),
       };
     }
-    initAction(){
+    initActions(){
       const thisCart = this;
       thisCart.dom.toggleTrigger.addEventListener('click', function() {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
@@ -393,6 +393,10 @@
       thisCart.dom.productList.addEventListener('update', function(){
         thisCart.update();
       });
+      thisCart.dom.productList.addEventListener('remove', function(event){
+        thisCart.remove(event.detail.cartProduct);
+      });
+
     }
     add (menuProduct){
       const thisCart = this;
@@ -433,6 +437,19 @@
         thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
       }
     }
+    remove(cartProduct){
+      const thisCart = this;
+      console.log(thisCart);
+      cartProduct.dom.wrapper.remove();
+
+      /* Delete info about the product from thisCart.products*/
+      const productIn = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(productIn);
+      thisCart.update();
+
+      /*Init an update function*/
+
+    }
 
   }
 
@@ -448,7 +465,8 @@
       thisCartProduct.price = menuProduct.price;
 
       thisCartProduct.getElements(element);
-      thisCartProduct.initAmountWidget();     
+      thisCartProduct.initAmountWidget();   
+      thisCartProduct.initAction();  
     }
     getElements(element){
       const thisCartProduct = this;
@@ -473,6 +491,7 @@
     }
     remove(){
       const thisCartProduct = this;
+      console.log('Remove wywolane');
       const event = new CustomEvent ('remove',{
         bubbles: true,
         detail: {
@@ -480,6 +499,17 @@
         },
       });
       thisCartProduct.dom.wrapper.dispatchEvent(event);
+    }
+    initAction(){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom.edit.addEventListener('click', function(event){
+        event.preventDefault();
+      });
+      thisCartProduct.dom.remove.addEventListener('click', function(event){
+        event.preventDefault();
+        thisCartProduct.remove();
+      });
     }
   }
 
