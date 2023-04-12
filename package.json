@@ -12,7 +12,6 @@
         "init:gitignore:custom": "echo \"dist\" >> .gitignore",
         "test": "npm-run-all test:*",
         "test:html": "html-validate src/*.html",
-        "test:scss": "stylelint src/sass/",
         "build": "npm-run-all build:* test",
         "build:clean": "rimraf dist && mkdirp dist",
         "build:copy": "copyfiles -a -u 1 -e \"**/sass/**/*\" -e \"**/.gitkeep\" \"src/**/*\" dist",
@@ -44,8 +43,6 @@
         "postcss-scss": "^4.0.4",
         "rimraf": "^3.0.2",
         "sass": "^1.44.0",
-        "stylelint": "^14.11.0",
-        "stylelint-config-standard-scss": "^5.0.0",
         "stylelint-scss": "^4.3.0"
     }
 }
