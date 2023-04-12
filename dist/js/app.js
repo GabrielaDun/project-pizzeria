@@ -1,4 +1,4 @@
-import {settings, select} from './components/settings.js';
+import {settings, select,} from './components/settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 
@@ -41,7 +41,6 @@ const app = {
     }
   },
 
-
   initCart: function(){
     const thisApp = this;
 
@@ -53,6 +52,10 @@ const app = {
     thisApp.productList.addEventListener('add-to-cart', function(event){
       app.cart.add(event.detail.product);
     });
+  },
+
+  initPages: function(){
+
   }
 
 };
