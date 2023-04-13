@@ -1,6 +1,7 @@
 import {settings, select, classNames,} from './components/settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 const app = {
 
@@ -10,8 +11,15 @@ const app = {
     thisApp.initData();
     thisApp.initCart();
     thisApp.initPages();
+    thisApp.initBooking();
   },
 
+  initBooking: function(){
+    const thisApp = this;
+    const bookingElem = document.querySelector(select.containerOf.booking);
+    thisApp.cart = new Booking (bookingElem);
+  },
+  
   activatePage: function(pageId){
     const thisApp = this;
     /* add class 'active to matching page, remove from non-matching page*/
@@ -77,16 +85,38 @@ const app = {
     // booking pages.
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
+    const idFromHash = window.location.hash.replace('#/', '');
 
-    // zeby po wlaczeniu strony aktywowala sie podstrona uzywamy:
-    thisApp.activatePage(thisApp.pages[0].id);
+    let pageMatchingHash = thisApp.pages[0].id;
+
+    for (let page of thisApp.pages){
+      if(page.id == idFromHash){
+        pageMatchingHash = page.id;
+        break;
+      }
+    }
+    thisApp.activatePage(pageMatchingHash);
+
+    /*if (thisApp.pages.includes(idFromHash)){
+      thisApp.activatePage(idFromHash);
+    } else {
+      thisApp.activatePage(thisApp.pages[0].id);
+    }*/
+
 
     for (let link of thisApp.navLinks){
       link.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();
-        
 
+        // get page id from href attribute
+        const id = clickedElement.getAttribute('href').replace('#', '');
+
+        // run thisApp.activetePage with that id
+        thisApp.activatePage(id);
+
+        // change URL hash 
+        window.location.hash = '#/' + id;
 
       });
     }
