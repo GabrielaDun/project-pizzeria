@@ -17,7 +17,7 @@ const app = {
   initBooking: function(){
     const thisApp = this;
     const bookingElem = document.querySelector(select.containerOf.booking);
-    thisApp.cart = new Booking (bookingElem);
+    thisApp.booking = new Booking (bookingElem);
   },
   
   activatePage: function(pageId){
@@ -71,11 +71,11 @@ const app = {
 
     const cartElem = document.querySelector(select.containerOf.cart);
     thisApp.cart = new Cart (cartElem);
-
+    console.log(thisApp.cart);
     thisApp.productList = document.querySelector(select.containerOf.menu);
 
     thisApp.productList.addEventListener('add-to-cart', function(event){
-      app.cart.add(event.detail.product);
+      thisApp.cart.add(event.detail.product);
     });
   },
 
@@ -109,10 +109,7 @@ const app = {
         const clickedElement = this;
         event.preventDefault();
 
-        // get page id from href attribute
         const id = clickedElement.getAttribute('href').replace('#', '');
-
-        // run thisApp.activetePage with that id
         thisApp.activatePage(id);
 
         // change URL hash 
