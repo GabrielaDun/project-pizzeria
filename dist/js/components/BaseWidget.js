@@ -1,4 +1,5 @@
 
+
 class BaseWidget{
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
@@ -7,6 +8,12 @@ class BaseWidget{
 
     thisWidget.value = initialValue;
   }
+
+  get Value(){
+    const thisWidget = this;
+    return thisWidget.value;
+  }
+
   setValue(value){
     const thisWidget = this;
 
@@ -31,7 +38,6 @@ class BaseWidget{
     const thisWidget = this;
 
     thisWidget.dom.wrapper.innerHTML = thisWidget.value;
-    // here is innerHTML and `i don't think i used it befoere
   }
   announce(){
     const thisWidget = this;
