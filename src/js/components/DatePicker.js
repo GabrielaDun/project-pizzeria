@@ -42,7 +42,9 @@ class DatePicker extends BaseWidget{
   }
 
   renderValue(){
+    const thisWidget = this;
 
+    thisWidget.dom.input.value = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
   }
 }
 

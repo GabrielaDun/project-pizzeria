@@ -1,6 +1,6 @@
 import {select, classNames, templates} from './settings.js';
 import utils from '../utils.js';
-import amountWidget from './amountWidget.js';
+import AmountWidget from './AmountWidget.js';
 
 class Product{
   constructor(id, data){
@@ -33,7 +33,7 @@ class Product{
     thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
     thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
     thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-    thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+    thisProduct.AmountWidgetElem = thisProduct.element.querySelector(select.menuProduct.AmountWidget);
   }
   initAccordion(){
     const thisProduct = this;
@@ -107,14 +107,14 @@ class Product{
     }
 
     thisProduct.priceSingle = price;
-    let amount = thisProduct.amountWidget.value;
+    let amount = thisProduct.AmountWidget.value;
     price *= amount;
     thisProduct.priceElem.innerHTML = price;
   }
   initAmountWidget(){
     const thisProduct = this;
-    thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
-    thisProduct.amountWidgetElem.addEventListener('update', function(){
+    thisProduct.AmountWidget = new AmountWidget(thisProduct.AmountWidgetElem);
+    thisProduct.AmountWidgetElem.addEventListener('update', function(){
       thisProduct.processOrder();
     }); 
 
@@ -139,9 +139,9 @@ class Product{
     const productSummary = {
       id: thisProduct.id,
       name: thisProduct.data.name,
-      amount: thisProduct.amountWidget.value,
+      amount: thisProduct.AmountWidget.value,
       params: thisProduct.prepareCartProductParams(),
-      price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+      price: thisProduct.priceSingle * thisProduct.AmountWidget.value,
       priceSingle: thisProduct.priceSingle,
     };
     console.log(productSummary);

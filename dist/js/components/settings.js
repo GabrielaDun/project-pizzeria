@@ -21,7 +21,7 @@ export const select = {
     form: '.product__order',
     priceElem: '.product__total-price .price',
     imageWrapper: '.product__images',
-    amountWidget: '.widget-amount',
+    AmountWidget: '.widget-amount',
     cartButton: '[href="#add-to-cart"]',
   },
   widgets: {
@@ -63,7 +63,7 @@ export const select = {
     address: '[name="address"]',
   },
   cartProduct: {
-    amountWidget: '.widget-amount',
+    AmountWidget: '.widget-amount',
     price: '.cart__product-price',
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
@@ -92,7 +92,7 @@ export const classNames = {
 };
 
 export const settings = {
-  amountWidget: {
+  AmountWidget: {
     defaultValue: 1,
     defaultMin: 1,
     defaultMax: 9,
