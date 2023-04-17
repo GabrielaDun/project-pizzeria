@@ -1,31 +1,35 @@
-
-
 class BaseWidget{
   constructor(wrapperElement, initialValue){
     const thisWidget = this;
     thisWidget.dom = {}; // why?
     thisWidget.dom.wrapper = wrapperElement; // what for?
 
-    thisWidget.value = initialValue;
+    thisWidget.correctValue = initialValue;
   }
 
-  get Value(){
+  get value(){
     const thisWidget = this;
-    return thisWidget.value;
+    return thisWidget.correctValue;
   }
 
-  setValue(value){
+  set value(value){
     const thisWidget = this;
 
     const newValue = thisWidget.parseValue(value);
 
     if (newValue  !== thisWidget.value && thisWidget.isValid(newValue)) {
-      thisWidget.value = newValue;
+      thisWidget.correctValue = newValue;
       thisWidget.announce();
     }
   
     thisWidget.renderValue();
   }
+  setValue(value) {
+    const thisWidget = this;
+
+    thisWidget.value = value;
+  }
+  
   parseValue(value){
     return parseInt(value);
   }

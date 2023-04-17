@@ -1,6 +1,6 @@
-import BaseWidget from '../components/BaseWidget.js';
+import BaseWidget from './BaseWidget.js';
 import utils from '../utils.js';
-import {select, settings} from '../settings.js';
+import {select, settings} from './settings.js';
 
 class DatePicker extends BaseWidget{
   constructor(wrapper){
@@ -42,9 +42,6 @@ class DatePicker extends BaseWidget{
   }
 
   renderValue(){
-    const thisWidget = this;
-
-    thisWidget.dom.input.value = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
   }
 }
 
