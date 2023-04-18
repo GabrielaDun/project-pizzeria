@@ -5,6 +5,7 @@ class BaseWidget{
     thisWidget.dom.wrapper = wrapperElement; // what for?
 
     thisWidget.correctValue = initialValue;
+    /*thisWidget.setValue(thisWidget.dom.input.value);||settings.AmountWidget.defaultValue)*/
   }
 
   get value(){
@@ -17,7 +18,7 @@ class BaseWidget{
 
     const newValue = thisWidget.parseValue(value);
 
-    if (newValue  !== thisWidget.value && thisWidget.isValid(newValue)) {
+    if (newValue  !== thisWidget.correctValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
       thisWidget.announce();
     }

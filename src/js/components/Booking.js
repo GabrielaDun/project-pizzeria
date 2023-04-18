@@ -13,12 +13,12 @@ class Booking {
     thisBooking.getData();
 
   }
-  render(){
+  render(element){
     const thisBooking = this;
-    const generatedHTML = templates.bookingWidget(thisBooking.data);
-    thisBooking.dom = utils.createDOMFromHTML(generatedHTML);
-    const bookingContainer = document.querySelector(select.containerOf.booking);
-    bookingContainer.appendChild(thisBooking.dom);
+    const generatedHTML = utils.createDOMFromHTML(templates.bookingWidget());
+    thisBooking.dom = {};
+    thisBooking.dom.wrapper = element;
+    thisBooking.dom.wrapper.appendChild(generatedHTML);
 
     
     thisBooking.dom.peopleAmount = document.querySelector(select.booking.peopleAmount);
@@ -47,7 +47,7 @@ class Booking {
     });
     thisBooking.dom.wrapper.addEventListener('update', function(){
       thisBooking.updateDOM();
-    })
+    });
 
   }
   getData(){
@@ -100,7 +100,7 @@ class Booking {
         //console.log(bookings);
         //console.log(eventsCurrent);
         //console.log(eventsRepeat);
-        thisBooking.parseData(bookings, eventsCurrent, eventsRepeat)
+        thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
 
   }
@@ -133,7 +133,7 @@ class Booking {
   makeBooked(date, hour, duration, table){
     const thisBooking = this;
 
-    if(typeof thisBooking.booked[date]== 'underfined'){
+    if(typeof thisBooking.booked[date]== 'undefined'){
       thisBooking.booked[date] = {};
     }
 
@@ -142,7 +142,7 @@ class Booking {
     for (let hourBlock = startHour; hourBlock < startHour+duration; hourBlock+=0.5){
       console.log('loop', hourBlock);
     
-      if (thisBooking.booked[date][hourBlock] == 'underfined'){
+      if (thisBooking.booked[date][hourBlock] == 'undefined'){
         thisBooking.booked[date][hourBlock] = [];
       }
       thisBooking.booked[date][hourBlock].push(table);
