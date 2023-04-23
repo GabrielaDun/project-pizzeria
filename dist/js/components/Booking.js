@@ -21,6 +21,7 @@ class Booking {
 
     thisBooking.dom = {};
     thisBooking.dom.wrapper = element;
+    console.log(thisBooking.dom.wrapper);
     thisBooking.dom.wrapper.innerHTML = generatedHTML;
 
     
@@ -33,6 +34,7 @@ class Booking {
     thisBooking.dom.bookTableButton = document.querySelector(select.booking.bookTableButton); 
     console.log(thisBooking.dom.bookTableButton);
     thisBooking.dom.form = document.querySelector(select.booking.form);
+    thisBooking.dom.timePicker= document.querySelector(select.booking.timePicker);
     thisBooking.dom.phone = document.querySelector(select.booking.phone);
     thisBooking.dom.address = document.querySelector(select.booking.address);
     thisBooking.dom.duration = document.querySelector(select.booking.duration);
@@ -54,26 +56,22 @@ class Booking {
 
     thisBooking.dom.bookTableButton.addEventListener('click', function (event) {
       event.preventDefault();
-      /*thisBooking.sendBooking(); */
+      console.log('clicked');
+      thisBooking.sendBooking(); 
     });
 
-    thisBooking.dom.wrapper.addEventListener('update', function(){
+    thisBooking.dom.timePicker.addEventListener('update', function (event) {
+      event.preventDefault();
+      thisBooking.updateDOM();
+      thisBooking.tableToBook = [];
       for (let table of thisBooking.dom.tables) {
         table.classList.remove('selected');
-        thisBooking.tableToBook = [];
-        console.log(thisBooking.tableToBook);
       } 
-      thisBooking.updateDOM();
-
-
     }); 
-    
+
     thisBooking.dom.tablesArea.addEventListener('click', function (event) {
       thisBooking.initTables(event);
     });
-
-    
-
 
   }
   getData(){
@@ -123,18 +121,16 @@ class Booking {
         ]);
       })
       .then(function ([bookings, eventsCurrent, eventsRepeat]){
-        //console.log(bookings);
-        //console.log(eventsCurrent);
-        //console.log(eventsRepeat);
+        console.log(bookings);
+        console.log(eventsCurrent);
+        console.log(eventsRepeat);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
 
   }
   parseData(bookings, eventsCurrent, eventsRepeat){
     const thisBooking = this;
-
     thisBooking.booked = {};
-
 
     for (let item of bookings){
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
