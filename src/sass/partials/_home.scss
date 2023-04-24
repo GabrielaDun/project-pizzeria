@@ -1,0 +1,142 @@
+.home-wrapper {
+    margin: ($base-size * 3.5) auto;
+    padding: ($base-size * 6) ($base-size * 4);
+    background: $color-light;
+    border-bottom: 1px solid lighten($color-dark, 70%);
+    border-radius: $radius;
+  }
+
+
+.boxes {
+    display: flex;
+    height: 310px;
+    flex-direction: column;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: $color-light;
+    margin: 0, 0, 0, 50px;
+}
+
+
+.boxes-other-pages {
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    font-size: 20px;
+    gap: 10px;
+}
+.leave-home-box {
+    justify-content: space-between;
+    position: relative;
+    width: 95%;
+    height: 100%;
+    margin: auto;
+    background-color: $color-darker;
+}
+
+.leave-home-box-image {
+    height: 100%;
+}
+.leave-home-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.leave-home-box-text {
+    position: absolute;
+    margin: auto;
+    top: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.leave-home-box-text h2 {
+    text-align: center;
+    position: relative;
+}
+
+// Open hours
+
+
+.boxes-info {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    flex-wrap: wrap;
+    background-color: $color-main;
+    color: $color-light;
+    height: 150px;
+    flex-direction: column;
+    font-size: 28px;
+    margin: 0,0, 30px,0;
+}
+
+.opening-hour {
+    display: flex;
+    margin: auto;
+}
+
+.home-hour-paragraph {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.home-inst-grid {
+    gap: 40px;
+}
+
+.home-inst-row {
+    margin: 20px, 0, 0, 0;
+    display: flex;
+	flex-direction: row;
+	height: 200px;
+	width: 100%;
+    gap: 10px;
+}
+
+.home-inst-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.home-inst-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.home-inst-box-icones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.home-inst-box-icones i {
+    color: $color-light;
+    position: relative;
+    font-size: 24px;
+    top: 85px;
+    left: 35%;
+    padding: 5px;
+}
+
+.home-inst-box-icones:hover {
+    display: block;
+    background: $color-dark;
+    opacity: 0.85;
+}
+
+.home-inst-box-icones i:hover {
+    color: $color-main;
+}
+
