@@ -11,7 +11,7 @@ class Booking {
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
-    thisBooking.selectedTable = [];
+    thisBooking.selectedTable = null;
 
   }
   render(element){
@@ -32,7 +32,6 @@ class Booking {
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
     thisBooking.dom.tablesArea = document.querySelector(select.booking.tablesArea);
     thisBooking.dom.bookTableButton = document.querySelector(select.booking.bookTableButton); 
-    console.log(thisBooking.dom.bookTableButton);
     thisBooking.dom.form = document.querySelector(select.booking.form);
     thisBooking.dom.timePicker= document.querySelector(select.booking.timePicker);
     thisBooking.dom.phone = document.querySelector(select.booking.phone);
@@ -63,7 +62,6 @@ class Booking {
     thisBooking.dom.timePicker.addEventListener('update', function (event) {
       event.preventDefault();
       thisBooking.updateDOM();
-      thisBooking.tableToBook = [];
       for (let table of thisBooking.dom.tables) {
         table.classList.remove('selected');
       } 
@@ -208,37 +206,36 @@ class Booking {
   }
   initTables(event){
     const thisBooking = this;
-    const tableByNumber = event.target.getAttribute(settings.booking.tableIdAttribute);
-    const clickedElement = event.target;
-    console.log(clickedElement);
-    console.log(this.selectedTable.length);
+
+    const domClickedElement = event.target;
+    const tableByNumber = domClickedElement.getAttribute(settings.booking.tableIdAttribute);
+    console.log(tableByNumber);
+    console.log(domClickedElement);
+    console.log(this.selectedTable);
     console.log(thisBooking.dom.tables);
-    if (clickedElement.classList.contains('table')){
-      if (clickedElement.classList.contains('booked')){
+
+    if (domClickedElement.classList.contains('table')){
+      if (domClickedElement.classList.contains('booked')){
         console.log('stolik jest juz zarezerowany!');
 
       } else {
-        if (this.selectedTable.length>0){
-          const greenTable = this.selectedTable[0]-1;
-          console.log(greenTable);
-          const dblClickedEl = clickedElement.getAttribute(settings.booking.tableIdAttribute)-1;
-          console.log(dblClickedEl);
-          console.log(clickedElement.getAttribute(settings.booking.tableIdAttribute));
-          if (dblClickedEl==greenTable) {
-            clickedElement.classList.remove('selected');
+        if (this.selectedTable !== null){
+          if (tableByNumber==thisBooking.selectedTable) {
+            domClickedElement.classList.remove('selected');
+            thisBooking.selectedTable = null;
           } else{
-            console.log(clickedElement);
-            thisBooking.dom.tables[greenTable].classList.remove('selected');
-            clickedElement.classList.add('selected');
-            thisBooking.selectedTable = [];
-            thisBooking.selectedTable.push(tableByNumber);
+            thisBooking.dom.tables[thisBooking.selectedTable-1].classList.remove('selected');
+            domClickedElement.classList.add('selected');
+            thisBooking.selectedTable = tableByNumber;
           }
         }
         else {
-          clickedElement.classList.add('selected');
-          thisBooking.selectedTable.push(tableByNumber);
+          domClickedElement.classList.add('selected');
+          thisBooking.selectedTable = tableByNumber;
         }
       }
+      console.log(thisBooking.selectedTable);
+      console.log(domClickedElement);
     }
 
 

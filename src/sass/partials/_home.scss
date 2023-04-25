@@ -16,7 +16,6 @@
     justify-content: space-between;
     flex-wrap: wrap;
     color: $color-light;
-    margin: 0, 0, 0, 50px;
 }
 
 
@@ -61,8 +60,6 @@
     position: relative;
 }
 
-// Open hours
-
 
 .boxes-info {
     display: flex;
@@ -87,9 +84,6 @@
     font-weight: 300;
 }
 
-.home-inst-grid {
-    gap: 40px;
-}
 
 .home-inst-row {
     margin: 20px, 0, 0, 0;
@@ -137,6 +131,13 @@
 }
 
 .home-inst-box-icones i:hover {
+    color: $color-main;
+}
+
+.home-link-to-inst {
+    font-weight: 200;
+    text-decoration: none;
+    left: 10px;
     color: $color-main;
 }
 
