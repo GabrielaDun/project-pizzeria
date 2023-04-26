@@ -202,43 +202,33 @@ class Booking {
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
-
   }
   initTables(event){
     const thisBooking = this;
 
     const domClickedElement = event.target;
-    const tableByNumber = domClickedElement.getAttribute(settings.booking.tableIdAttribute);
-    console.log(tableByNumber);
-    console.log(domClickedElement);
-    console.log(this.selectedTable);
-    console.log(thisBooking.dom.tables);
+    const clickedTableByNumber = domClickedElement.getAttribute(settings.booking.tableIdAttribute);
 
     if (domClickedElement.classList.contains('table')){
       if (domClickedElement.classList.contains('booked')){
         console.log('stolik jest juz zarezerowany!');
-
       } else {
         if (this.selectedTable !== null){
-          if (tableByNumber==thisBooking.selectedTable) {
+          if (clickedTableByNumber==thisBooking.selectedTable) {
             domClickedElement.classList.remove('selected');
             thisBooking.selectedTable = null;
           } else{
             thisBooking.dom.tables[thisBooking.selectedTable-1].classList.remove('selected');
             domClickedElement.classList.add('selected');
-            thisBooking.selectedTable = tableByNumber;
+            thisBooking.selectedTable = clickedTableByNumber;
           }
         }
         else {
           domClickedElement.classList.add('selected');
-          thisBooking.selectedTable = tableByNumber;
+          thisBooking.selectedTable = clickedTableByNumber;
         }
       }
-      console.log(thisBooking.selectedTable);
-      console.log(domClickedElement);
     }
-
-
   }
 
   sendBooking(){
